@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>浏览器定位</title>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.1&services=true"></script>
+</head>
+<body>
+<div style="width:520px;height:340px;border:1px solid gray" id="container"></div>
+</body>
+</html>
+<script type="text/javascript">
+var map = new BMap.Map("container");            // 创建Map实例
+var point = new BMap.Point(116.331398,39.897445);
+map.centerAndZoom(point,12);
+
+var geolocation = new BMap.Geolocation();
+geolocation.getCurrentPosition(function(r){
+    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        var mk = new BMap.Marker(r.point);
+        map.addOverlay(mk);
+        map.panTo(r.point);
+        map.centerAndZoom(r.point,18);
+        alert('您的位置：'+r.point.lng+','+r.point.lat);
+    }else{
+        alert('failed:'+getFailReason(this.getStatus()));
+    }        
+})
+
+function getFailReason(code){
+    var reVal = null;
+    switch(code){
+        case BMAP_STATUS_SUCCESS:
+            reVal = "检索成功";
+            break;
+        case BMAP_STATUS_CITY_LIST:
+            reVal = "城市列表";
+            break;
+        case BMAP_STATUS_UNKNOWN_LOCATION:
+            reVal = "位置结果未知";
+            break;
+        case BMAP_STATUS_UNKNOWN_ROUTE:
+            reVal = "导航结果未知";
+            break;
+        case BMAP_STATUS_INVALID_KEY:
+            reVal = "非法密钥";
+            break;
+        case BMAP_STATUS_INVALID_REQUEST:
+            reVal = "非法请求";
+            break;
+        case BMAP_STATUS_PERMISSION_DENIED:
+            reVal = "没有权限";
+            break;
+        case BMAP_STATUS_SERVICE_UNAVAILABLE:
+            reVal = "服务不可用";
+            break;
+        case BMAP_STATUS_TIMEOUT:
+            reVal = "超时";
+            break;
+        default:
+            reVal = "";
+            break;
+    }
+    return reVal;
+}
+
+</script>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title> 福美来不动产 租买房搜索</title> 
+	   
+	<link rel="apple-touch-icon" href="img/tutsTouchIcon.png" />
+	
+	<!--script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script-->    
+	
+	<script type="text/javascript" src="src/sencha/sencha-touch.js"></script>
+	   
+	<link rel="stylesheet" href="src/css/fml_sencha_touch.css" type="text/css">
+	<link rel="stylesheet" href="src/css/application.css" type="text/css">
+	
+</head>
+<body>
+	
+<div id="loading-mask" >
+   
+</div>
+
+<div class="wrap_ext_el">
+	
+	<div id="map" ></div>
+	<div id="splash_screen">
+	
+			<div class="zu_or_mai">
+				<div class="left">
+					<div class="checkbox" id="zu_check"></div>
+				</div>
+				<div class="right">
+					<div class="checkbox" id="mai_check"></div>
+				</div>
+			</div>
+	
+			<div class="zufang_button">
+	
+			</div>
+	
+			<div class="dingzhi_search_button">
+	
+			</div>
+	
+	</div>
+
+</div>
+
+
+<!--sencha-app-->
+	<script type="text/javascript" src="src/index.js"></script>
+
+
+<!--sencha-utils-->
+	<script type="text/javascript" src="src/utils/AppUtils.js"></script>
+	<script type="text/javascript" src="src/utils/GeoLocation.js"></script>
+	<script type="text/javascript" src="src/utils/Config.js"></script>
+	
+<!--sencha-templates-->
+	<script type="text/javascript" src="src/templates/templates.js"></script>
+	
+<!--sencha-views-->
+	<script type="text/javascript" src="src/views/SplashScreenPanel.js"></script>
+	
+<!--
+	<script type="text/javascript" src="src/views/BaiduMapPanel.js"></script>
+	<script type="text/javascript" src="src/views/BaiduMapWrapPanel.js"></script>
+-->
+	<script type="text/javascript" src="src/views/CustomSearchWrapPanel.js"></script>
+	<script type="text/javascript" src="src/views/CustomSearchListPanel.js"></script>
+	<script type="text/javascript" src="src/views/CustomSearchDetailPanel.js"></script>
+	<script type="text/javascript" src="src/views/CustomSearchFormPanel.js"></script>
+	<script type="text/javascript" src="src/views/CustomSearchDetailImages.js"></script>
+	
+	
+	<script type="text/javascript" src="src/views/HouseListPanel.js"></script>
+	<script type="text/javascript" src="src/views/HouseDetailPanel.js"></script>
+	<script type="text/javascript" src="src/views/HouseNearPanel.js"></script>
+	
+	<script type="text/javascript" src="src/views/OptionPanel.js"></script>
+	<script type="text/javascript" src="src/views/MainTabPanel.js"></script>
+	
+	<script type="text/javascript" src="src/views/MainPanel.js"></script>
+	
+<!--sencha-models-->
+	<script type="text/javascript" src="src/models/House.js"></script>
+	
+<!--sencha-form-->
+	<script type="text/javascript" src="src/forms/FormElement.js"></script>
+	<script type="text/javascript" src="src/forms/FormNearBuy.js"></script>
+	<script type="text/javascript" src="src/forms/FormNearZu.js"></script>
+	<script type="text/javascript" src="src/forms/FormCustomBuy.js"></script>
+	<script type="text/javascript" src="src/forms/FormCustomZu.js"></script>
+	<script type="text/javascript" src="src/forms/FormKeyWord.js"></script>
+
+<!--sencha-utils
+	<script type="text/javascript" src="src/map_gen_baidu.js"></script>-->
+	
+    <script type="text/javascript" src="src/phonegap-1.0.0.js"></script>
+    
+    
+    
+    
+    
+    <script type="text/javascript">
+        document.addEventListener("deviceready", FML.mainLaunch, false);
+    </script>
+    
+    
+</body>
+</html>
+
+
+

@@ -1,0 +1,154 @@
+a{
+	text-decoration:none;
+}
+
+.x-mask {
+	position:absolute;
+	left:90px;
+	top:90px;
+}
+div.list-item-row { 
+		
+		margin-left: -12px;
+		white-space: nowrap;  
+		overflow: hidden;  
+		text-overflow: ellipsis;
+        
+ }
+
+ div.list-item-row div.left { float:left;width:110px; }
+  div.list-item-row div.left img { width:110px;height:100px; }
+ div.list-item-row div.right { 
+	 float: left;text-align:left;line-height:27px;margin-left: 18px; 
+	 margin-top:-4px;
+	 
+ }
+div.list-item-row div.right div { 
+	 width:140px; 
+	 white-space: nowrap;  
+
+/*	 overflow: hidden;  */
+	 text-overflow: ellipsis;  margin-left: -12px;
+ }
+  div.list-item-row div.right div.title {  }
+  div.list-item-row div.right div.spec { color:gray;  }
+  div.list-item-row div.right div.price {  }
+  div.list-item-row div.right div.phone_no { color: gray; }
+  div.list-item-row div.right div.phone_no a { cursor:pointer; color: gray; margin-right:4px;}
+ div.list-item-row div.clear { clear: both; }
+ .sum_price {color:red;}
+ 
+.formkeyword{
+	margin-bottom:-15px;
+}
+
+html{height:100%}
+body{height:100%;margin:0px;padding:0px}
+#loading-mask{
+ 	width:100%;height:100%;
+ 	background:transparent url('../images/Default.png') no-repeat 0 0;
+}
+#map {height:100%;width: 100%;}
+
+.house_detail_template_not_sell{
+	padding:10px;
+	padding-right:20px;
+	height:00px;
+}
+.house_detail_template_not_sell img{ width:300px;height:250px;padding:2px;}
+.house_detail_template_not_sell .price{ margin:0 auto;text-align:center;line-height:35px;}
+
+.house_detail_template_not_sell .info{ clear:both; }
+.house_detail_template_not_sell .info li{ line-height:25px;min-hieght:25px;
+	display:block;}
+.house_detail_template_not_sell .info .info_title{ float:left;text-color:yellow;font-weight:bold;
+}
+.house_detail_template_not_sell .info .info_content{ float:right;text-color:gray;font-weight:bold;font-size:16px;
+}
+
+.wrap_ext_el{display:none;}
+
+#splash_screen {
+	background:transparent url('../images/EntranceBg.png') no-repeat 0 0;
+	width:320px;
+	height:460px;
+}
+
+
+#splash_screen .zu_or_mai { position:absolute;top: 96px;
+left: 57px;
+width: 155px;}
+#splash_screen .zu_or_mai .left{float:left;}
+#splash_screen .zu_or_mai .right{float:right;}
+#splash_screen .zu_or_mai .checkbox{
+	border: 3px solid white;
+width: 49px;
+height: 40px;
+	border-radius: 7px;
+}
+.zu_or_mai_check_mark{
+	background:transparent url('../images/GreenCheckMark.png') no-repeat -2px -2px;
+	-webkit-animation-name: zu_or_mai_checkbox_css_animat_scale;
+	-webkit-animation-duration: 0.1s;
+	display:block;
+	width:49px;height:40px;
+}
+@-webkit-keyframes zu_or_mai_checkbox_css_animat_scale { 
+	0% { -webkit-transform: scale(3); } 
+	100% { -webkit-transform: scale(1); } 
+}
+
+.zufang_button{
+	background:transparent url('../images/NearbyEntranceButton.png') no-repeat 0 0;
+	width:198px;
+	height:59px;
+	position:absolute;
+	top: 156px;
+	left: 55px;
+	
+}
+.zufang_button_clicked{
+	background:transparent url('../images/NearbyEntranceButton_highlight.png') no-repeat 0 0;
+}
+
+
+.dingzhi_search_button{
+	background:transparent url('../images/SearchEntranceButton.png') no-repeat 0 0;
+	width:198px;
+	height:59px;
+	position:absolute;
+	top: 239px;
+	left: 55px;
+}
+.dingzhi_search_button_clicked{
+	background:transparent url('../images/SearchEntranceButton_highlight.png') no-repeat 0 0;
+}
+
+
+
+.rounded-corners {
+
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+}
+
+
+/*map gen baidu*/
+.custom_marker{
+		position: absolute;
+		background-color:#EE5D5B;
+		border:1px solid #BC3B3A;
+		color:white;
+		height:28px;
+		width: auto;
+		padding:2px;
+		line-height:18px;
+		white-space:nowrap;
+		moz-user-select:none;
+		font-size:12px;
+		-moz-border-radius: 15px;
+		border-radius: 15px;
+}
+
