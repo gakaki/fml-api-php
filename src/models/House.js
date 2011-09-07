@@ -76,17 +76,24 @@ FML.models.House = Ext.regModel('House', {
 	                return for_dight(sum_price,2);
 	            }	
             },
-            ,
+            {
+            	name: 'sum_price_junjia',
+            	convert: function(value, record) {
+	                var sum_price  = record.get('sum_price');
+	      			var build_area = record.get('build_area');
+					var res		   = sum_price / build_area;
+					res			   = Math.round (res*Math.pow(10,2))/Math.pow(10,2); 
+					
+	                return res;
+	            }
+            },
+            {	name: 'rent_price' 	},
             {
             	name: 'rent_price_gai',
             	convert: function(value, record) {
 	                var rent_price  = record.get('rent_price');
-
-					var for_dight  = function(dight,how){
-						var res = Math.round (dight*Math.pow(10,how))/Math.pow(10,how); 
-						return res;
-					}
-	                return for_dight(rent_price,2);
+					var res = Math.round (rent_price*Math.pow(10,2))/Math.pow(10,2); 
+					return res;
 	            }	
             },
             {//建筑面积
@@ -139,8 +146,9 @@ FML.models.House = Ext.regModel('House', {
             {name: 'zw',  type: 'string'}, 	//縮略圖2
             {name: 'cf',  type: 'string'},		//縮略圖3
             {name: 'wsj',  type: 'string'},		//縮略圖4
-            {name: 'ws',  type: 'string'}		//縮略圖5
-            ] 	
+            {name: 'ws',  type: 'string'},		//縮略圖5
+            {name: 'propertyname',  type: 'string'}		//权属
+    	] 	
             
             
             
@@ -160,6 +168,8 @@ FML.stores.HouseSearchStore = new Ext.data.Store({
 			storeId: 'HouseSearchStore',
     	    model: 'House',
     	    pageSize : FML.utils.Config.page_size,
+    	    clearOnPageLoad :false,
+    	    showMoreText : "载入更多......",
     	    proxy: {
     	        type: FML.utils.Config.get_call_back_proxy(),
     	        actionMethods: {
@@ -181,7 +191,23 @@ FML.stores.HouseSearchStore = new Ext.data.Store({
 
 				}
     	    },
-    	    autoLoad: false
+    	    autoLoad: false,
+		    listeners:{
+	      		datachanged : function(store ){
+	      			console.log('datachanged',store);
+	      		},
+	      		load : function(store,  records,  successful ){
+	      			console.log('load',store,  records,  successful);
+	      			
+			     	// add "show more..."
+		            var showMore = Ext.ModelMgr.create({
+		                name : this.showMoreText,
+		                showMore: true,
+		            }, 'House');
+		            store.insert(store.getCount(),showMore);
+	      		
+	      		}
+		    }
 });
 
 FML.stores.HouseNearStore = new Ext.data.Store({

@@ -146,75 +146,15 @@ WHERE RowNumber BETWEEN  21 AND 30 ORDER BY shi_id";
 			
 			echo json_encode($res);
 		}
-		const PAGESIZE = 30;
-		function _base_sql()
-		{
-		 	$page_size = self::PAGESIZE;
-		 	$sql = "
-select top $page_size
-h.shi_id,		--房源信息表编号
-h.update_date,	--记录更新时间
-h.form_bedroom,	--室
-h.form_foreroom,	--厅
-h.form_toilet,		--卫
-h.form_terrace,		--阳台
-h.sum_price,		--总价
-h.Rent_Price,		--租金
-build_area,			-- 建筑面积
-usable_area,		--使用面积
-hd.Name as houseDicName,	--楼盘名
-hd.map_location,	--地理信息数据
-h.houseDicCode,		--楼盘字典id
-h.sanjakCode,		--不知道
-h.districtCode,				--小区id 什么区的，
-sd.Name as districtName,	--小区名
-h.su_id,			--不知道
-h.shi_addr,			--产证地址
-h.lineName,			--联系人名
-h.landlord_name,	--房东姓名
-h.landlord_tel,		--房东电话
-hd.address,			--具体的地址好像是楼盘字典的地址
-f.Name as fitmentName, --装修情况
-y.Name as yearName,	--具体年代
-h.remarks,			--备注信息
-h.hPic,				--户型图
-h.havePic,			--是否有图片
-h.hPicURL,				--图片url 暂时不使用
-h.hPic_id, 				--图片id fk
-h.hasKey,			--是否有钥匙
-h.build_floor,		--当前楼层
-h.build_levels,		--总楼层
-s.Name as stateName,	--状态名 有效咯
-h.aType,			--是租还是售
-h.stateCode,		--状态编号
-ft.Name as facetoName,	--朝向
-ss.su_name,			--门店名
-ss.tel1	,			--门店电话1
-ss.tel2 ,				--门店电话2
-ss.tel3	,			--门店电话3
-pic_thumb.kt as thumb,		-- 缩略图
-pic_table.kt,pic_table.zw,pic_table.cf,pic_table.wsj,pic_table.wj	--该死的图片 
- from h_houseinfor h 
-left join s_HouseDic hd on hd.HouseDicCode=h.HouseDicCode  
-left join h_Fitment f on f.FitmentCode=h.FitmentCode 
-left join h_Year y on y.YearCode=h.YearCode 
-left join h_Faceto ft on h.FacetoCode=ft.FacetoCode 
-left join s_District sd on h.DistrictCode=sd.DistrictCode 
-left join h_State s on s.StateCode=h.StateCode 
-left join s_Subsection ss on ss.su_id = h.su_id 
-left join (select shi_id,kt,zw,cf,wsj,wj from h_picUpfile) pic_table on h.shi_id=pic_table.shi_id 
-left join (select shi_id,MIN(kt) AS kt from h_picUpfile GROUP BY shi_id) pic_thumb on h.shi_id=pic_thumb.shi_id 
-";
-
-				return $sql;
-		}
+		const PAGESIZE = 10;
+		
 		
 		function base_sql()
 		{
 		 	$page_size = self::PAGESIZE;
 		 	$sql = "
 
-SELECT   top 1000
+SELECT  
 A.shi_id, 				--房源信息表编号
 A.update_date,			--记录更新时间
 A.form_bedroom, 		--室
@@ -237,7 +177,7 @@ A.sanjakCode,			--不知道
 A.su_id,			--不知道
 
 A.lineName,			--联系人名
-B.Address, 			--具体的地址好像是楼盘字典的地址
+B.address, 			--具体的地址好像是楼盘字典的地址
 B.Name, 			--楼盘名
 
 A.atype,			--是租还是售
@@ -245,18 +185,22 @@ A.build_floor,		--当前楼层
 A.build_levels,		--总楼层	
 
 A.remarks,			--备注信息
-
-C.kt, 
+A.havePic,			--是否有图片
+					--C.kt, 
 
 D.name AS fitmentName, 	--装修情况
 
+E.su_name,				--分店名
 E.tel1, E.tel2, E.tel3,
 
 pic_table.kt,
 pic_table.zw,
 pic_table.cf,
 pic_table.wsj,
-pic_table.wj 
+pic_table.wj,
+
+ft.name  	as facetoName,	--朝向
+G.propertycode,G.Name as propertyname 	-- 房产权
 
 FROM  h_houseinfor AS A LEFT OUTER JOIN
 (SELECT     houseDicCode, Address, name , map_location
@@ -266,14 +210,42 @@ FROM  h_houseinfor AS A LEFT OUTER JOIN
                             GROUP BY shi_id) AS C ON A.shi_id = C.shi_id LEFT OUTER JOIN
 (SELECT     Name, FitmentCode
                             FROM          h_Fitment) AS D ON A.FitmentCode = D.FitmentCode LEFT OUTER JOIN
-(SELECT     su_id, tel1, tel2 , tel3
+(SELECT     su_id,su_name, tel1, tel2 , tel3
                             FROM          s_Subsection) AS E ON A.su_id = E.su_id LEFT OUTER JOIN
-(select shi_id,kt,zw,cf,wsj,wj from h_picUpfile) pic_table on a.shi_id=pic_table.shi_id 
-	
+(select shi_id,kt,zw,cf,wsj,wj from h_picUpfile) pic_table on a.shi_id=pic_table.shi_id
+left join h_Faceto ft on A.FacetoCode=ft.FacetoCode 
+left join (select PropertyCode,Name from h_Property) G on A.PropertyCode = G.PropertyCode 
+
 ";
-	
 				return $sql;
 		} 
+		
+		function wrap_paged_sql($sql_full,$page_size=self::PAGESIZE,$start=0,$orderby_column = 'havePic')
+		{
+			if (empty($sql_full)) {
+				die("sql 语句不能为空");
+			}
+			if (empty($page_size) || $page_size <=0 ) {
+				$page_size =  self::PAGESIZE;
+			}
+			if (empty($start)) {
+				$start 	   =  0; 
+			}
+			$start 		= $start + 1;
+			$end		= $start + $page_size - 1;
+			
+			$sql = "
+SELECT  *  FROM ( SELECT  ROW_NUMBER()  OVER  ( ORDER BY {$orderby_column} desc)  AS RowNumber,  *  FROM 
+
+( $sql_full ) 
+
+as inner_table ) as page_table ";
+			
+			$cond = new SearchCondition();
+			$cond->condition('RowNumber',explode(",","$start,$end", 2),SearchCondition::OP_BETWEEN,$allow_blank = false);
+			$sql				= $sql.$cond->to_sql();
+			return $sql;
+		}
 		
 		function find_near_houses_ids_by_geo($near_houses)
 		{
@@ -334,9 +306,10 @@ is_search_near=1&lat=31&long=121&search=remark&sum_price=1,99999&zu_or_mai=1&for
 			$build_area				= $_REQUEST['build_area'];
 			$callback				= $_REQUEST['callback'];
 			
+			$page_size				= $_REQUEST['page_size'];
+			$start					= $_REQUEST['start'];
 			
 			
-		
 			$near_houses_ids 		= array();
 			if ($is_search_near) {	//search near houses
 				$near_houses_ids    = $this->find_near_houses_by_geo($lat,$long);
@@ -367,8 +340,8 @@ is_search_near=1&lat=31&long=121&search=remark&sum_price=1,99999&zu_or_mai=1&for
 			$cond->condition('A.facetocode',$facetocode);
 			$cond->condition('A.build_area',explode(",", $build_area, 2),SearchCondition::OP_BETWEEN,$allow_blank = false);
 			$cond->condition(array('A.remarks','B.name','B.address'),$search,SearchCondition::OP_LIKE,$allow_blank = false);
-			
 			//$cond->condition('A.HavePic',1);
+			
 			$atype				= $this->filter_blank_array( array($zu_or_mai,2));
 			//var_dump($atype);die;
 			$cond->condition('A.atype', $atype ,SearchCondition::OP_IN,$allow_blank = false);
@@ -380,15 +353,23 @@ is_search_near=1&lat=31&long=121&search=remark&sum_price=1,99999&zu_or_mai=1&for
 			//print_r($sql);die;
 			$data['status']				= 1;
 			
+		
+			$sql						= $this->wrap_paged_sql($sql,self::PAGESIZE,$start);
+			
 			if (DEBUG) {
-				$data['sql']			= $sql;
-				$data['condition_sql']	= $condition_sql;
+				//preg 用来去除该死的换行符
+				
+				//$data['sql']			= preg_replace("/[\s]{2,}/","",$sql);		
+				//$data['condition_sql']	= preg_replace("/[\s]{2,}/","",$condition_sql);
+				
+				
+				$data['sql']			= str_replace("\r\n","",$sql);	
+				$data['condition_sql']	= str_replace("\r\n","",$condition_sql);
+				
+				
 			}
 			
-			$sql 						= $sql." order by A.havepic desc ";
-
 			$data['houses']				= $this->query($sql);
-			
 			$data['total']				= count($data['houses']);
 			
 			if ($callback) {
@@ -496,8 +477,8 @@ is_search_near=1&lat=31&long=121&search=remark&sum_price=1,99999&zu_or_mai=1&for
 				'error'		=> ''
 			);
 			
-			$callback				= $_REQUEST['callback'];
-			$shi_id 				=  $_REQUEST['shi_id'];
+			$callback				= 		$_REQUEST['callback'];
+			$shi_id 				= 	 	$_REQUEST['shi_id'];
 			
 			$sql  = "select * from h_picUpfile where shi_id = '{$shi_id}'";
 			

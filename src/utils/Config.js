@@ -10,7 +10,7 @@ FML.utils.Config_Base =  Ext.extend(Ext.util.Observable,{
 	        FML.utils.Config_Base.superclass.constructor.call(this, config)
 	    },
     
-		page_size: 3, 
+		page_size: 10, 
 		is_search_near: 0,
 		lat: 121, 
 		long : 31, 

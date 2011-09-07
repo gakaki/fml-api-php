@@ -8,6 +8,7 @@ FML.views.CustomSearchDetailImages = Ext.extend(Ext.Carousel,{
 			id:"CustomSearchDetailImages",
 			indicator : true,
 			ui:'dark',
+			layout:'card',
 		    dockedItems: [
 		     {
 		            dock : 'top',
@@ -22,6 +23,7 @@ FML.views.CustomSearchDetailImages = Ext.extend(Ext.Carousel,{
 					            	 
 									 var customSearchWrapPanel		= Ext.getCmp('CustomSearchWrapPanel');
 									 var customSearchDetailPanel 	= Ext.getCmp('CustomSearchDetailPanel');
+									 
 									 customSearchWrapPanel.setActiveItem(customSearchDetailPanel);
 					            	
 					            }
@@ -31,11 +33,10 @@ FML.views.CustomSearchDetailImages = Ext.extend(Ext.Carousel,{
 		    ],
 		    liseners: {
 		    	cardswitch :function ( container, newCard,oldCard, index, animated ) {
-		    	  console.log( container, newCard,oldCard, index, animated);
+		    	  	console.log( container, newCard,oldCard, index, animated);
 		    	}
 		    }
-			
-	
+		
         });
 
         FML.views.CustomSearchDetailImages.superclass.initComponent.call(this);

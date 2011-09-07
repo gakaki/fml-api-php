@@ -11,9 +11,19 @@ FML.views.CustomSearchListPanel = Ext.extend(Ext.List,{
 	      	store: FML.stores.HouseSearchStore,
 	      	id:"CustomSearchListPanel",
 	      	layout:'fit',
+	      	enableBubble:'itemtap',
+	      	
+	      	showMoreText: "载入更多...",
+	      	
 	      	listeners: {
-	            itemtap : function(thisView, idx) {
+	      		
+	            itemtap : function(thisView, idx ,item,e) {
 
+	            	//console.log(thisView, idx ,item,e);
+	            	//单击 电话 按钮 
+	            	if (typeof(e.target.className) !== undefined &&　e.target.className == "phone_call") {
+	            		return false;
+	            	};
 	                var rec = thisView.store.getAt(idx);
 					var customSearchDetailPanel = Ext.getCmp('CustomSearchDetailPanel');
 	
@@ -21,14 +31,21 @@ FML.views.CustomSearchListPanel = Ext.extend(Ext.List,{
 					
 					var customSearchWrapPanel		= Ext.getCmp('CustomSearchWrapPanel');
 			
+					if (rec.data) {
+						Ext.getCmp('customSearchDetailPanelToolBar').setTitle(rec.data.address);
+					};
 					
 					customSearchWrapPanel.setActiveItem(customSearchDetailPanel);
-					            	
+					
+					customSearchDetailPanel.to_detail_images();
+					
 	            }
 	        }
         });
         FML.views.CustomSearchListPanel.superclass.initComponent.call(this);
+    
     }
+
 });
 
 

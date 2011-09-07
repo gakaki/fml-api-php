@@ -123,8 +123,8 @@ FML.views.CustomSearchFormPanel = Ext.extend(Ext.Panel,{
 							is_search_near	:FML.utils.Config.is_search_near,
 							lat				:FML.utils.Config.lat,
 							long			:FML.utils.Config.long,
-							zu_or_mai		:FML.utils.Config.zu_or_mai
-							
+							zu_or_mai		:FML.utils.Config.zu_or_mai,
+							page_size		:FML.utils.Config.page_size
 						};
 						
 						 var form_total_values  = Ext.apply(formKeyWordValue, formNearBuyValue,other_values);
@@ -132,12 +132,17 @@ FML.views.CustomSearchFormPanel = Ext.extend(Ext.Panel,{
 						 var store = FML.stores.HouseSearchStore;
 						 store.getProxy().extraParams = form_total_values;
 						
-						 store.load();
+						 //store.loadPage();
+						 
+						store.load(
+						function(records){
+						 	console.log(records);
+					 	});
 						 
 						 var customSearchListWrapPanel 	= Ext.getCmp('CustomSearchListWrapPanel');
 						 var customSearchWrapPanel		= Ext.getCmp('CustomSearchWrapPanel');
 						 
-						 Ext.getCmp('CustomSearchListWrapPanelToolbar').setTitle(FML.utils.Config.get_notice_txt()+"房资源搜索结果");
+						 			Ext.getCmp('CustomSearchListWrapPanelToolbar').setTitle(FML.utils.Config.get_notice_txt()+"房资源搜索结果");
 						 
 						 customSearchWrapPanel.setActiveItem(customSearchListWrapPanel);
 						 

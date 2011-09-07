@@ -20,9 +20,9 @@ FML.forms.FormNearBuy = Ext.extend(Ext.form.FormPanel,{
            		FML.forms.facetocode,		//朝向
            		
            		FML.forms.build_area, 		//面积
-             	FML.forms.districtcode,		//什么小区
+             	//FML.forms.districtcode,		//什么小区
            		
-   				FML.forms.house_type		//一手房 二手房
+   				//FML.forms.house_type		//一手房 二手房
 	               
 	                ]
 				}	

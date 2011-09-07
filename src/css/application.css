@@ -1,7 +1,28 @@
 a{
 	text-decoration:none;
 }
-
+.phone_call_detail {
+	
+}
+.phone_call_detail img{
+	width:32px;
+	height:32px;
+}
+.phone_call_detail_style1{
+	display:block;
+	width:auto;
+	background:transparent url('../images/phone_call_detail_style2.png') no-repeat 0 0;
+}
+.phone_call_detail_style2{
+	display:block;
+	width:auto;
+	background:transparent url('../images/phone_call_detail_style2.png') no-repeat 0 0;
+}
+.phone_call_detail_style3{
+	display:block;
+	width:auto;
+	background:transparent url('../images/phone_call_detail_style2.png') no-repeat 0 0;
+}
 .x-mask {
 	position:absolute;
 	left:90px;
@@ -15,12 +36,18 @@ div.list-item-row {
 		text-overflow: ellipsis;
         
  }
+ 
+ div.list-item-row .show_more_row{ 
+		text-align:center;
+		padding:5px;
+ }
 
  div.list-item-row div.left { float:left;width:110px; }
   div.list-item-row div.left img { width:110px;height:100px; }
  div.list-item-row div.right { 
 	 float: left;text-align:left;line-height:27px;margin-left: 18px; 
 	 margin-top:-4px;
+	 position:relative;
 	 
  }
 div.list-item-row div.right div { 
@@ -33,11 +60,26 @@ div.list-item-row div.right div {
   div.list-item-row div.right div.title {  }
   div.list-item-row div.right div.spec { color:gray;  }
   div.list-item-row div.right div.price {  }
-  div.list-item-row div.right div.phone_no { color: gray; }
-  div.list-item-row div.right div.phone_no a { cursor:pointer; color: gray; margin-right:4px;}
+  div.list-item-row div.right div.phone_no { color: gray; 
+  		z-index:99999999;
+  }
+  div.list-item-row div.right div.phone_no a { cursor:pointer; color: gray;
+  	
+  		position:absolute;
+ 		display:block;
+		left: 130px;
+		top: 52px;
+  		width:64px;height:64px;
+  		z-index:99999999;
+  	
+   }
+     div.list-item-row div.right div.phone_no a img{ 
+  		display:block;
+  		width:64px;height:64px;
+   }
  div.list-item-row div.clear { clear: both; }
- .sum_price {color:red;}
- 
+ .sum_price{font-size:26px;}
+ .red {color:red;}
 .formkeyword{
 	margin-bottom:-15px;
 }
@@ -61,7 +103,7 @@ body{height:100%;margin:0px;padding:0px}
 .house_detail_template_not_sell .info{ clear:both; }
 .house_detail_template_not_sell .info li{ line-height:25px;min-hieght:25px;
 	display:block;}
-.house_detail_template_not_sell .info .info_title{ float:left;text-color:yellow;font-weight:bold;
+.house_detail_template_not_sell .info .info_title{ float:left;text-color:yellow;font-weight:bold;min-width:150px;
 }
 .house_detail_template_not_sell .info .info_content{ float:right;text-color:gray;font-weight:bold;font-size:16px;
 }

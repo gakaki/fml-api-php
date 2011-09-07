@@ -9,11 +9,10 @@ FML.views.CustomSearchDetailPanel = Ext.extend(Ext.Panel,{
 
     initComponent: function () {
 		
-    	
     	this.record_data  = {};
     	var me = this;
         Ext.apply(this, {
-            autoDestroy: true,
+        
             fullscreen: true,
 			cardSwitchAnimation :{
 				type: 'fade',
@@ -27,7 +26,7 @@ FML.views.CustomSearchDetailPanel = Ext.extend(Ext.Panel,{
 		            dock : 'top',
 		            xtype: 'toolbar',
 		            title: '详细信息',
-		            
+		            id:'customSearchDetailPanelToolBar',
 					items: [
 					        {
 					            text: '列表',
@@ -61,82 +60,91 @@ FML.views.CustomSearchDetailPanel = Ext.extend(Ext.Panel,{
         });
 		
  
-        
         FML.views.CustomSearchDetailPanel.superclass.initComponent.call(this);
         
-        this.addImageClick();
+       
+					
     },
+
     no_more_pic_alert:function(){
     	Ext.Msg.alert('', '没有更多的图片了', Ext.emptyFn);
     },
-    addImageClick : function(){
-    	
-        var me = this;
-		var customSearchDetailImage =  null;
-        
-        me.on({
-        	'show' :function(){
-        		
-        		customSearchDetailImage =  Ext.get('customSearchDetailImageId');
-        	
-	        	customSearchDetailImage.on({
-		        	'tap':function(e){
+    to_detail_images :function(){
+		
+		var customSearchDetailImage =  Ext.get('customSearchDetailImageId');
+
+		customSearchDetailImage.on({
+	    	'tap':function(e){
+	    		
+	    		//非常非常重要
+				Ext.get(this).removeAllListeners(); 
+	    		
+				
+	    
+	    		
+	    		
+	    		 var hPic_id =  this.getAttribute('hPic_id');
+	   			 var havePic =  this.getAttribute('havePic');
+	    		 var shi_id  =  this.getAttribute('shi_id');
+	    		 
+	    		 var record = FML.stores.HouseSearchStore.findRecord('shi_id', shi_id, 0, true, false, true);
+	    		 
+	    		console.log(e,this);
+				console.log(record,shi_id,havePic);
+				console.log(havePic && shi_id && record);
+				
+				
+	   			 if (havePic && shi_id && record) {
+	
+						var customSearchWrapPanel   		= Ext.getCmp('CustomSearchWrapPanel');
+						var customSearchDetailImages 		= Ext.getCmp('CustomSearchDetailImages');
 						
-		        		 var hPic_id =  this.getAttribute('hPic_id');
-		       			 var havePic =  this.getAttribute('havePic');
-		        		 var shi_id  =  this.getAttribute('shi_id');
-		        		 
-		        		 var record = FML.stores.HouseSearchStore.findRecord('shi_id', shi_id, 0, true, false, true);
 						
-		       			 if (havePic && shi_id && record) {
-
-								var customSearchWrapPanel   		= Ext.getCmp('CustomSearchWrapPanel');
-								var customSearchDetailImages 		= Ext.getCmp('CustomSearchDetailImages');
-								
-								customSearchDetailImages.removeAll();
-								
-								var data =  record.data;
-								
-								var pics = [
-									data['kt'],
-									data['cf'],
-									data['ws'],
-									data['wsj'],
-									data['zw'],
-									data['kt']
-								];
-								var items = [];
-								for (var i=0; i < pics.length; i++) {
-									if (!pics[i]) {continue;};
-									//console.log(FML.utils.Config.pic_base_url + pics[i]);
-									//console.log(FML.templates.HouseDetailImageTemplate.apply({kt:pics[i]}));
-									//console.log(i);
-									items.push(			
-										{
-											html: FML.templates.HouseDetailImageTemplate.apply({kt:pics[i]}),
-											cls : 'CustomSearchDetailImages'
-										}
-									);
-								};
-								
-								//customSearchDetailImage.clearListeners();
-								
-								customSearchDetailImages.add(items);
-
-								customSearchDetailImages.doLayout(); 
-								customSearchDetailImages.scrollToCard(0); // This will send the user back to the first card
-
-    							customSearchWrapPanel.setActiveItem(customSearchDetailImages);
-    	
-		       			 }else{
-		       			 	me.no_more_pic_alert();
-		       			 }
-		        		 
-		        	}
-        		});
-        	}
-        });
+						var data =  record.data;
+						
+						var pics = [
+							data['kt'],
+							data['cf'],
+							data['ws'],
+							data['wsj'],
+							data['zw']
+						];
+						
+						var items = [];
+						for (var i=0; i < pics.length; i++) {
+							if (!pics[i]) {continue;};
+							
+							items.push(			
+								{
+									html: FML.templates.HouseDetailImageTemplate.apply({kt:pics[i]}),
+									cls : 'CustomSearchDetailImages',
+									title:'adfadsfadfdasfadsfasfasdfdasf',
+								}
+							);
+						};
+						
+						customSearchDetailImages.removeAll();
+						customSearchDetailImages.add(items);
+						customSearchDetailImages.doLayout(); 
+						customSearchDetailImages.scrollToCard(0); // This will send the user back to the first card
+						
+						customSearchDetailImages.on({
+							cardswitch :function ( container, newCard,oldCard, index, animated ) {
+			    	  			console.log( container, newCard,oldCard, index, animated);
+			    			}
+						});
+						
+						
+						customSearchWrapPanel.setActiveItem(customSearchDetailImages);
+	
+	   			 }else{
+	   			 	me.no_more_pic_alert();
+	   			 }
+	    		 
+	    	}
+		});
     }
+  
 });
 
 
