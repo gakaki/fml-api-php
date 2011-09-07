@@ -21,7 +21,7 @@ FML.templates.MapContent = new Ext.XTemplate(
 //这里如果remarks为空 name就选择addresss  注意房东的电话
 FML.templates.HouseListTemplate = new Ext.XTemplate(
         '<div class="list-item-row">',
-         		'<tpl if="showMore"><div class="show_more_row">载入更多.....</div></tpl>',
+         		'<tpl if="showMore"><div class="show_more_row">载入更多</div></tpl>',
          		'<tpl if="shi_id != 0">',
 		      		'<div class="left">',
 				      		'<tpl if="thumb.length == 0">',

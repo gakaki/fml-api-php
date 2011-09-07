@@ -185,9 +185,7 @@ FML.stores.HouseSearchStore = new Ext.data.Store({
     	        },
     	        extraParams: {
 					
-    	        					  	
-
-
+    	        			
 
 				}
     	    },

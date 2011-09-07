@@ -2,7 +2,8 @@
 FML.views.CustomSearchListPanel = Ext.extend(Ext.List,{
 
     initComponent: function () {
-	
+		
+    	var me  = this;
         Ext.apply(this, {
             autoDestroy: true,
             fullscreen: true,
@@ -13,31 +14,42 @@ FML.views.CustomSearchListPanel = Ext.extend(Ext.List,{
 	      	layout:'fit',
 	      	enableBubble:'itemtap',
 	      	
-	      	showMoreText: "载入更多...",
-	      	
 	      	listeners: {
-	      		
+	      				
 	            itemtap : function(thisView, idx ,item,e) {
+
+					
+
 
 	            	//console.log(thisView, idx ,item,e);
 	            	//单击 电话 按钮 
 	            	if (typeof(e.target.className) !== undefined &&　e.target.className == "phone_call") {
 	            		return false;
-	            	};
-	                var rec = thisView.store.getAt(idx);
-					var customSearchDetailPanel = Ext.getCmp('CustomSearchDetailPanel');
-	
-					customSearchDetailPanel.update(rec.data);
-					
-					var customSearchWrapPanel		= Ext.getCmp('CustomSearchWrapPanel');
+	            	}else{
+	            		
+						if(thisView.store.getAt(idx).get("showMore") === true){
+							console.log('yes this is show more');
+							
+							thisView.store.removeAt(idx);
+							thisView.store.nextPage();
+						}else{
+			                var rec = thisView.store.getAt(idx);
+							var customSearchDetailPanel = Ext.getCmp('CustomSearchDetailPanel');
 			
-					if (rec.data) {
-						Ext.getCmp('customSearchDetailPanelToolBar').setTitle(rec.data.address);
-					};
+							customSearchDetailPanel.update(rec.data);
+							
+							var customSearchWrapPanel		= Ext.getCmp('CustomSearchWrapPanel');
 					
-					customSearchWrapPanel.setActiveItem(customSearchDetailPanel);
-					
-					customSearchDetailPanel.to_detail_images();
+							if (rec.data) {
+								Ext.getCmp('customSearchDetailPanelToolBar').setTitle(rec.data.address);
+							};
+							
+							customSearchWrapPanel.setActiveItem(customSearchDetailPanel);
+							
+							customSearchDetailPanel.to_detail_images();
+						}
+	            	}
+
 					
 	            }
 	        }
